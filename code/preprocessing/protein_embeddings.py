@@ -92,4 +92,3 @@ def create_fasta_file(sequences, filename):
 
 
 
-
