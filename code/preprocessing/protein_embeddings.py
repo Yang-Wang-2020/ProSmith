@@ -63,7 +63,6 @@ def calculate_protein_embeddings(all_sequences, outpath, prot_emb_no = 1000):
 
 def merge_protein_emb_files(output_dir, outpath, fasta_file, prot_emb_no):
     new_dict = {}
-
     version = 0
     fasta_sequences = SeqIO.parse(open(fasta_file),'fasta')
 
