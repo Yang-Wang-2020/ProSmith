@@ -87,17 +87,18 @@ for k, ind in enumerate(y_pred_ind):
 ## Requirements for running the code in this GitHub repository
 The code was implemented and tested on Linux with the following packages and versions
 - python 3.8.3
-- pandas 1.3.0
-- torch 2.0.0+cu117
-- numpy 1.22.4
-- Bio 1.79
-- transformers 4.27.2
-- logging 0.5.1.2
-- sklearn 1.2.2
-- lifelines 0.27.7
-- xgboost 0.90
-- hyperopt 0.2.5
-- json 2.0.9
+- Bio==1.6.2
+- biopython==1.79
+- fair_esm==2.0.0
+- hyperopt==0.2.5
+- lifelines==0.27.7
+- numpy==1.22.4
+- pandas==1.3.0
+- scikit_learn==1.2.2
+- torch==2.0.0
+- transformers==4.27.2
+- xgboost==0.90
+  
 
 
 
