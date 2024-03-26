@@ -172,57 +172,56 @@ def train(args, model, trainloader, optimizer, criterion, device, gpu, epoch):
 
 
 def evaluate(args, model, valloader, criterion, device, gpu):
-    # evaluate the model on validation set
     model.eval()
+    val_loss = 0.0
     y_true, y_pred = [], []
-    val_loss = 0.
-    
-    logging.info(f"Evaluating")
-    
+
+    logging.info("Evaluating")
+
     with torch.no_grad():
         for step, batch in enumerate(valloader):
-            # move batch to device
             if is_cuda(device):
                 batch = [r.cuda(gpu) for r in batch]
             smiles_emb, smiles_attn, protein_emb, protein_attn, labels, _ = batch
-            # forward pass
+
             outputs = model(smiles_emb=smiles_emb, 
                             smiles_attn=smiles_attn, 
                             protein_emb=protein_emb,
                             protein_attn=protein_attn,
                             device=device,
                             gpu=gpu)
-            
+
             loss = criterion(outputs, labels.float())
-            val_loss += loss
-            preds = outputs
+            val_loss += loss.item()
 
             if args.binary_task:
-                y_true.extend(labels.cpu().bool())
-                y_pred.extend(preds.cpu())
+                y_true.extend(labels.cpu().detach().numpy())
+                y_pred.extend(outputs.sigmoid().cpu().detach().numpy())
             else:
-                y_true.extend(labels.cpu().numpy())
-                y_pred.extend(preds.cpu().numpy())
+                y_true.extend(labels.cpu().detach().numpy())
+                y_pred.extend(outputs.cpu().detach().numpy())
 
-    # calculate evaluation metrics
+    val_loss /= len(valloader)
+
     if not args.binary_task:
+        # For regression tasks
+        y_true = np.array(y_true)
+        y_pred = np.array(y_pred)
         MSE = mean_squared_error(y_true, y_pred)
-        val_loss /= len(valloader)
         R2 = r2_score(y_true, y_pred)
         CI = concordance_index(y_true, y_pred)
-        logging.info('Val MSE: {:.4f}, Val Loss: {:.4f}, Val R2: {:.4f}, Val CI: {:.4f}'.format(MSE, val_loss, R2, CI))
+        logging.info(f'Val MSE: {MSE:.4f}, Val Loss: {val_loss:.4f}, Val R2: {R2:.4f}, Val CI: {CI:.4f}')
         return val_loss, MSE
     else:
-        y_true = np.array(y_true).astype(int)
+        # For binary classification tasks
+        y_true = np.array(y_true)
         y_pred = np.array(y_pred)
         auc_score = roc_auc_score(y_true, y_pred)
-        y_pred = np.round(y_pred).astype(int)
-        acc = accuracy(y_true, y_pred)
-        precision = precision_score(y_true, y_pred)
-        recall = recall_score(y_true, y_pred)
-        val_loss /= len(valloader)
-        logging.info('Val Accuracy: {:.4f},Val AUC: {:.4f},Val precision: {:.4f}, Val recall: {:.4f}, Val Loss: {:.4f}'.format(acc, auc_score, precision, recall, val_loss))
-        return val_loss, acc
+        y_pred_binary = (y_pred > 0.5).astype(int)
+        precision = precision_score(y_true, y_pred_binary)
+        recall = recall_score(y_true, y_pred_binary)
+        logging.info(f'Val AUC: {auc_score:.4f}, Val precision: {precision:.4f}, Val recall: {recall:.4f}, Val Loss: {val_loss:.4f}')
+        return val_loss, auc_score
 
 
 # Define the main function for training the model
