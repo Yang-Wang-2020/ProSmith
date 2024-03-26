@@ -86,7 +86,7 @@ for k, ind in enumerate(y_pred_ind):
 
 ## Requirements for running the code in this GitHub repository
 The code was implemented and tested on Linux with the following packages and versions
-- python 3.8.3
+- python==3.8.3
 - Bio==1.6.2
 - biopython==1.79
 - fair_esm==2.0.0
