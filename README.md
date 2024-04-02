@@ -17,6 +17,14 @@ Afterwards, this repository should have the following strcuture:
     ├── LICENSE.md     
     └── README.md
 
+```bash
+conda create -n prosmith python=3.8.3
+conda activate prosmith
+cd ProSmith
+pip install -r requirements.txt
+```
+
+
 ## How to train and evaluate a model
 ### (a) Data preparation
 First, you need a training, validation, and test set as csv files. Every csv file should be comma-separated and have the following columns:
