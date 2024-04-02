@@ -38,9 +38,7 @@ For an example of such csv-files, please have a look at the files in following f
 Before you can start training ProSmith, ESM-1b embeddings and ChemBERTa2 embeddings need to be calculated for all protein sequences and SMILES strings in your repository, respectively. For example, for the ESP dataset this can be done by executing the following command:
 
 ```python
-python code/preprocessing/preprocessing.py --train_val_path data/training_data/ESP/train_val/ \
-															   --outpath data/training_data/ESP/embeddings \
-															   --smiles_emb_no 2000 --prot_emb_no 2000
+python code/preprocessing/preprocessing.py --train_val_path data/training_data/ESP/train_val/ --outpath data/training_data/ESP/embeddings --smiles_emb_no 2000 --prot_emb_no 2000
 ```
 -"train_val_path": specifies, where all training and validation files are stored (with all protein sequences and SMILES strings)
 -"outpath": specifies, where the calculated ESM-1b and ChemBERTa2 embeddings will be stored
