@@ -54,8 +54,8 @@ python code/training/training.py --train_dir data/training_data/ESP/train_val/ES
 							    --save_model_path data/training_data/ESP/saved_model \
 							    --embed_path data/training_data/ESP/embeddings \
 							    --pretrained_model data/training_data/BindingDB/saved_model/pretraining_IC50_6gpus_bs144_1.5e-05_layers6.txt.pkl \
-							    --learning_rate 1e-5  --num_hidden_layers 6 --batch_size 24 --binary_task True \
-							    --log_name ESP --num_train_epochs 100
+							    --learning_rate 1e-5  --num_hidden_layers 6 --batch_size 20 --binary_task True \
+							    --log_name ESP --num_train_epochs 200
 ```
 
 This model will train for num_train_epochs=100 epochs and it will store the best model (i.e. with the best performance on the validation set) in "save_model_path". Therefore, after each epoch model performance is evaluated. 
