@@ -10,7 +10,7 @@ Before you can reproduce the results of the manuscript, you need to [download an
 wget https://zenodo.org/records/8182032/files/data.zip
 ```
 
-Afterwards, this repository should have the following strcuture:
+Afterwards, this repository should have the following structure:
 
     ├── code
     ├── data   
@@ -38,7 +38,7 @@ For an example of such csv-files, please have a look at the files in following f
 Before you can start training ProSmith, ESM-1b embeddings and ChemBERTa2 embeddings need to be calculated for all protein sequences and SMILES strings in your repository, respectively. For example, for the ESP dataset this can be done by executing the following command:
 
 ```python
-python code/preprocessing/preprocessing.py --train_val_path data/training_data/ESP/train_val/ --outpath data/training_data/ESP/embeddings --smiles_emb_no 12000 --prot_emb_no 12000
+python code/preprocessing/preprocessing.py --train_val_path data/training_data/ESP/train_val/ --outpath data/training_data/ESP/embeddings --smiles_emb_no 8000 --prot_emb_no 8000
 ```
 -"train_val_path": specifies, where all training and validation files are stored (with all protein sequences and SMILES strings)
 -"outpath": specifies, where the calculated ESM-1b and ChemBERTa2 embeddings will be stored
